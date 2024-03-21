@@ -1,0 +1,60 @@
+.meetingsSection {
+  background-color: rgba(grey, 0.2);
+  margin-bottom: 16px;
+  color: hsl(var(--primary-foreground));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.meetingCards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  li {
+    display: flex;
+    gap: 8px;
+
+    .meetingDate {
+      background-color: rgba(grey, 0.2);
+      white-space: pre-wrap;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .meetingDetails {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      strong {
+        font-size: 1.1rem;
+      }
+      .meetingStartIn {
+        color: greenyellow;
+      }
+
+      .fillFormBtn {
+        color: #ea676a;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      a {
+        color: cadetblue;
+      }
+    }
+  }
+}
