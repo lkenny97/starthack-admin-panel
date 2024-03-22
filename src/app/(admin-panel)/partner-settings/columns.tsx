@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -33,7 +34,7 @@ export const columns: ColumnDef<Partner>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const mentor = row.original
+      const partner = row.original
 
       return (
         <DropdownMenu>
@@ -45,10 +46,8 @@ export const columns: ColumnDef<Partner>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(`${mentor.id}`)}
-            >
-              View partner
+            <DropdownMenuItem>
+              <Link href={`/partner-details?id=${partner.id}`}>View partner</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem><span style={{color: "red"}}>Delete partner</span></DropdownMenuItem>

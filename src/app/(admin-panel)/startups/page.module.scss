@@ -1,6 +1,54 @@
 .filterForm {
-  background-color: grey;
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+  padding: 16px;
   color: white;
   display: flex;
   flex-direction: column;
+}
+
+.startupList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.directoryView {
+  display: flex;
+  gap: 24px;
+}
+.startupCard {
+  color: white;
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+
+
+  .name {
+    font-size: 1.5rem;
+  }
+
+  .hqCountry {
+
+  }
+
+  .description {
+
+  }
+
+  .tags {
+    span {
+      border: 1px solid lightgrey;
+      padding: 6px;
+      border-radius: 4px;
+    }
+  }
+
 }

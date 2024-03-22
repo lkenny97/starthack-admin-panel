@@ -13,6 +13,25 @@ import {
   DrawerTrigger
 } from "@/components/ui/drawer";
 import {Button} from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {Input} from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+import {addMeetingNote} from "@/api/userAPI";
+
 
 interface MeetingCardsProps {
   meetings: IMeeting[],
@@ -29,6 +48,14 @@ const DAY_TIME_OPTIONS: any = {
 
 const MeetingCards = ({meetings, finished}: MeetingCardsProps) => {
   const [meetingCardFormOpen, setMeetingCardFormOpen] = React.useState(false)
+  const [selectedMeetingId, setSelectedMeetingId] = React.useState<number>()
+  const [noteText, setNoteText] = React.useState("")
+
+  const handleNoteEdit = () => {
+    addMeetingNote(selectedMeetingId ?? 0, noteText).then(resp => {
+      setMeetingCardFormOpen(false)
+    })
+  }
 
   return (
     <>
@@ -40,43 +67,53 @@ const MeetingCards = ({meetings, finished}: MeetingCardsProps) => {
                 className={styles.meetingDate}
               >
                 {
-                  new Date(meeting.startTimestamp * 1000)
+                  new Date(meeting.start_date)
                     .toLocaleDateString('en-GB', LONG_DATE_OPTIONS)
                     .replace(/ /g, "\n")
                 }
               </span>
               <div className={styles.meetingDetails}>
                 {
-                  !finished ? <span className={styles.meetingStartIn}>Meeting starting in X hours</span> :
-                  <span onClick={() => setMeetingCardFormOpen(true)} className={styles.fillFormBtn}>Please fill the form ✏️</span>
+                  !finished ? <span className={styles.meetingStartIn}>Meeting starting in {Math.floor((new Date(meeting.start_date).getTime() - new Date().getTime()) / (1000 * 60 * 60))} hours</span> :
+                  <span onClick={() => {
+                    setMeetingCardFormOpen(true)
+                    setSelectedMeetingId(meeting.id)
+                  }} className={styles.fillFormBtn}>Please fill the form ✏️</span>
                 }
-                <strong>{meeting.partner}</strong>
+                <strong>{meeting.attendees.length} Participants</strong>
                 <span>
-                {new Date(meeting.startTimestamp * 1000).toLocaleDateString('en-GB', DAY_TIME_OPTIONS)}
+                {new Date(meeting.start_date).toLocaleDateString('en-GB', DAY_TIME_OPTIONS)}
                   &nbsp;-&nbsp;
-                  {new Date(meeting.endTimestamp * 1000).toLocaleDateString('en-GB', DAY_TIME_OPTIONS)}
+                  {new Date(meeting.end_date).toLocaleDateString('en-GB', DAY_TIME_OPTIONS)}
               </span>
-                <a href={meeting.meetingUrl} target="_blank">{meeting.meetingUrl}</a>
+                <a href={meeting.purpose} target="_blank">{meeting.purpose}</a>
               </div>
             </li>
           ))
         }
       </ul>
       {finished && (
-        <Drawer open={meetingCardFormOpen} onClose={() => setMeetingCardFormOpen(false)}>
-          <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-              <DrawerDescription>This action cannot be undone.</DrawerDescription>
-            </DrawerHeader>
-            <DrawerFooter>
-              <Button>Submit</Button>
-              <DrawerClose>
-                <Button onClick={() => setMeetingCardFormOpen(false)} variant="outline">Cancel</Button>
-              </DrawerClose>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
+        <Dialog open={meetingCardFormOpen} onOpenChange={open => setMeetingCardFormOpen(open)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Meeting Questionnaire</DialogTitle>
+              <DialogDescription>
+                <div style={{marginBottom: 16}}>
+                  <strong>How was the meeting</strong>
+                  <p>You can write about things that would answer to: &quot;Was the mentor adequate for your case?&quot;, &quot;Was their input useful?&quot; etc.</p>
+                  <Textarea
+                    value={noteText}
+                    style={{minWidth: 150}}
+                    placeholder="Write your notes here"
+                    onChange={e => setNoteText(e.target.value)}
+
+                  />
+                </div>
+                <Button onClick={handleNoteEdit} style={{float: "right"}}>Submit</Button>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       )}
     </>
   );

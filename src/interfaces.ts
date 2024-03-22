@@ -1,7 +1,9 @@
 export interface IMeeting {
-  startTimestamp: number,
-  endTimestamp: number,
+  start_date: number,
+  end_date: number,
   startup: string,
+  purpose: string,
+  attendees: any[],
   partner: string,
   meetingUrl: string,
   id: number,
@@ -14,6 +16,7 @@ export interface IMeeting {
 }
 
 export interface IStartup {
+  id: number,
   name: string,
   logo_url: string,
   industry: string,

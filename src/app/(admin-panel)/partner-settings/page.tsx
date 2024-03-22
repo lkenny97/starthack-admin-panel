@@ -1,8 +1,8 @@
 import Sidebar from "@/app/(admin-panel)/Sidebar";
 import Content from "@/app/(admin-panel)/Content";
 import styles from "@/app/(admin-panel)/mentor-settings/page.module.scss";
-import {DataTable} from "@/app/(admin-panel)/mentor-settings/data-table";
 import {columns, Partner} from "@/app/(admin-panel)/partner-settings/columns";
+import {DataTable} from "@/components/ui/data-table";
 
 async function getData(): Promise<Partner[]> {
   // Fetch data from your API here.

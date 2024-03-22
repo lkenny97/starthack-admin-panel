@@ -1,7 +1,5 @@
 export const Roles = {
-  ADMIN: "admin",
-  MENTOR: "mentor",
-  INVESTOR: "investor"
+  ADMIN: "AminUser",
+  MENTOR: "MentorUser",
+  INVESTOR: "InvestorUser"
 }
-
-export const USER_ROLE = Roles.ADMIN

@@ -12,17 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import Link from "next/link"
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Mentor = {
+export type Report = {
   id: number
   name: string,
   company: string
 }
 
-export const columns: ColumnDef<Mentor>[] = [
+export const columns: ColumnDef<Report>[] = [
   {
     accessorKey: "name",
     header: "Name",
@@ -34,7 +34,7 @@ export const columns: ColumnDef<Mentor>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const mentor = row.original
+      const report = row.original
 
       return (
         <DropdownMenu>
@@ -47,10 +47,10 @@ export const columns: ColumnDef<Mentor>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Link href={`/mentor-details?id=${mentor.id}`}>View mentor</Link>
+              <Link href={`/startup-details/reports/report?id=${report.id}`}>View report</Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem><span style={{color: "red"}}>Delete mentor</span></DropdownMenuItem>
+            {/*<DropdownMenuSeparator />*/}
+            {/*<DropdownMenuItem><span style={{color: "red"}}>Delete partner</span></DropdownMenuItem>*/}
           </DropdownMenuContent>
         </DropdownMenu>
       )

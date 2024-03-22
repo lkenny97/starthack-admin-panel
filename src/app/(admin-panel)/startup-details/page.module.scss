@@ -1,0 +1,40 @@
+.kpiList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: lightgrey;
+}
+
+.startupInfoWrapper {
+  color: lightgrey;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+
+
+}
+
+.startupDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+
+.tabs {
+  display: flex;
+  gap: 16px;
+  color: lightgrey;
+  padding-bottom: 32px;
+
+  a:hover {
+    color: white;
+  }
+}

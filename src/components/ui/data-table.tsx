@@ -33,13 +33,13 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="rounded-md border">
-      <Table>
+      <Table style={{color: "lightgray"}}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead style={{color: "lightgray"}} key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(

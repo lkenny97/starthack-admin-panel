@@ -1,9 +1,9 @@
 import Sidebar from "@/app/(admin-panel)/Sidebar";
 import Content from "@/app/(admin-panel)/Content";
 import styles from "@/app/(admin-panel)/mentor-settings/page.module.scss";
-import {DataTable} from "@/app/(admin-panel)/mentor-settings/data-table";
 import {columns, TimeSlot} from "@/app/(admin-panel)/available-slots/columns";
 import {Button} from "@/components/ui/button";
+import {DataTable} from "@/components/ui/data-table";
 
 async function getData(): Promise<TimeSlot[]> {
   // Fetch data from your API here.

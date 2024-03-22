@@ -1,15 +1,17 @@
+"use client"
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import styles from './page.module.scss'
 import Link from "next/link";
 import Image from 'next/image'
 import Sidebar from "@/app/(admin-panel)/Sidebar";
+import useUser from "@/hooks/useUser";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Authentication | Start Fellowship",
-  description: "Sign in",
-};
+// export const metadata: Metadata = {
+//   title: "Authentication | Start Fellowship",
+//   description: "Sign in",
+// };
 
 export default function AdminPanelLayout({
                                      children, params
@@ -17,6 +19,8 @@ export default function AdminPanelLayout({
   children: React.ReactNode;
   params: any
 }>) {
+  const {user} = useUser({redirectTo: "/signin"})
+
   return (
     <main className={styles.main}>
       <header>
