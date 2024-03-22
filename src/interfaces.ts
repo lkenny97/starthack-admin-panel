@@ -7,6 +7,8 @@ export interface IMeeting {
   partner: string,
   meetingUrl: string,
   id: number,
+  notes: any[],
+  meeting_id: number,
   ratingFromStartup?: number,
   punctualityFromStartup?: number,
   notesFromStartup?: string,
