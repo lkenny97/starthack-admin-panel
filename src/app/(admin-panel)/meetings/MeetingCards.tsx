@@ -79,7 +79,7 @@ const MeetingCards = ({meetings, finished}: MeetingCardsProps) => {
                     setMeetingCardFormOpen(true)
                     setSelectedMeetingId(meeting.meeting_id)
                   }} className={styles.fillFormBtn}>Please fill the form ✏️</span>
-                  : <span>{meeting.notes[0].content}</span>
+                  : <span>Note: {meeting.notes[0].content}</span>
                 }
                 <strong>{meeting.attendees.length} Participants</strong>
                 <span>
