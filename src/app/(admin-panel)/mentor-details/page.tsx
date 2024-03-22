@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import Sidebar from "@/app/(admin-panel)/Sidebar";
 import Content from "@/app/(admin-panel)/Content";

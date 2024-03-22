@@ -30,6 +30,7 @@ import {
 import {Textarea} from "@/components/ui/textarea";
 import LineChart from "@/components/atoms/LineChart/LineChart";
 import {IStartup} from "@/interfaces";
+import {useSearchParams} from "next/navigation";
 
 interface PageProps {
   searchParams: any,
@@ -48,82 +49,7 @@ const KPIS = [
   },
 ]
 
-const STARTUP = {
-  "business_model": "B2C",
-  "created_at": "2024-03-21 03:03:45",
-  "current_employee_count": 24,
-  "description": "We are incubation and accelartion platform serving for both investors and start ups. Our wide range mentor network helps startups to achieve goals",
-  "equity_free_investments_by_fs": 15000,
-  "founding_date": "2021-01-04 00:00:00",
-  "founding_stage": "Series A",
-  "fs_accelerator_participant": "NO",
-  "fs_incubation_participant": false,
-  "hq_country": "Turkiye",
-  "id": 13,
-  "industry": "Fintech",
-  "logo_url": "cdn.teklifimgelsin.com",
-  "name": "TheStartFellows",
-  "old_accelerator_programs": "ITU Cekirdek",
-  "pitch_deck_url": "cdn.teklifimgelsin.com/deck/tg_deck_24",
-  "start_up_reports": [
-    {
-      "kpis": [
-        {
-          "created_at": "Thu, 21 Mar 2024 18:31:15 GMT",
-          "id": 29,
-          "kpi_value": 165,
-          "monthly_report_id": 13,
-          "name": "Monthly Visits",
-          "north_star_metric": true
-        },
-        {
-          "created_at": "Thu, 21 Mar 2024 18:31:15 GMT",
-          "id": 30,
-          "kpi_value": 3,
-          "monthly_report_id": 13,
-          "name": "Daily Visits",
-          "north_star_metric": false
-        }
-      ],
-      "startup_company_id": 13
-    }
-  ],
-  "start_up_status": "Growing",
-  "startup_users": [
-    {
-      "age": 30,
-      "are_terms_accepted": null,
-      "birthday": "Wed, 24 Nov 1993 00:00:00 GMT",
-      "city": "Ankara",
-      "country": "Turkiye",
-      "email": "biriertugrulhakan@gmail.com",
-      "english_proficiency_lvl": null,
-      "english_test": null,
-      "gender": "Male",
-      "id": 12,
-      "is_agreed_to_rules": null,
-      "is_consent_given": false,
-      "linkedin_url": "https://www.linkedin.com/in/ertu%C4%9Frulhakanbiri/",
-      "major": "Computer Science",
-      "motivation_letter": "I am sure I am a good fit to your app",
-      "name": "Hakan",
-      "reason_to_fs": "For potentail",
-      "reference": "WebSite",
-      "role": "CTO/Co-Founder",
-      "startUpCompanyId": 13,
-      "student_level": "Bachelor",
-      "surname": "Biri",
-      "telephone": "+905334362688",
-      "uni_end_date": "Tue, 17 Jan 2017 00:00:00 GMT",
-      "uni_start_date": "Sun, 11 Sep 2011 00:00:00 GMT",
-      "university_name": "Turkiye"
-    }
-  ],
-  "total_founding": 12000000,
-  "updated_at": "2024-03-21 03:03:45",
-  "web_site_url": "https://teklifimgelsin.com"
-}
-const Page = ({searchParams}: PageProps) => {
+const Page = ({}: PageProps) => {
   const [date, setDate] = React.useState<Date>()
   const [startupData, setStartupData] = React.useState<IStartup | null>()
   const [reportData, setReportData] = React.useState<any>()
@@ -132,9 +58,11 @@ const Page = ({searchParams}: PageProps) => {
   const [graphData, setGraphData] = React.useState()
   const [modalOpen, setModalOpen] = React.useState(false)
   const [selectedKpi, setSelectedKpi] = React.useState("")
+  const searchParams = useSearchParams()
 
   React.useEffect(() => {
-    getStartupInfo(searchParams.id).then(result => {
+
+    getStartupInfo(parseInt(searchParams.get("id") ?? "1")).then(result => {
       if (result)
         setStartupData(result)
       else {
@@ -148,7 +76,7 @@ const Page = ({searchParams}: PageProps) => {
     const prevDate = new Date()
     prevDate.setMonth(prevDate.getMonth() - parseInt(compareDate))
 
-    compareReports(searchParams.id, [Math.floor(prevDate.getTime() / 1000), Math.floor(today.getTime() / 1000)]).then(result => {
+    compareReports(parseInt(searchParams.get("id") ?? "1"), [Math.floor(prevDate.getTime() / 1000), Math.floor(today.getTime() / 1000)]).then(result => {
       if (result)
         setReportData(result)
       else {
@@ -158,7 +86,7 @@ const Page = ({searchParams}: PageProps) => {
   }, [compareDate])
 
   function getGraphData(kpiName: string) {
-    getKpiData(searchParams.id, kpiName).then(data => {
+    getKpiData(parseInt(searchParams.get("id") ?? "1"), kpiName).then(data => {
       setGraphData(data)
       setModalOpen(true)
     })
@@ -234,7 +162,7 @@ const Page = ({searchParams}: PageProps) => {
       <Content>
         {/*<img src={startupData.logo_url}/>*/}
         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-          <Tabs startupId={searchParams.id}/>
+          <Tabs />
           <div>
             <strong style={{color: "lightgray"}}>Compare with</strong>
             <Select defaultValue={compareDate} onValueChange={val => setCompareDate(val)}>

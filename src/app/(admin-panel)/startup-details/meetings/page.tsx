@@ -6,7 +6,6 @@ import Content from "@/app/(admin-panel)/Content";
 import {Button} from "@/components/ui/button";
 import styles from "@/app/(admin-panel)/meetings/page.module.scss";
 import MeetingCards from "@/app/(admin-panel)/meetings/MeetingCards";
-import {IMeeting} from "@/interfaces";
 import Tabs from "@/app/(admin-panel)/startup-details/Tabs";
 import {
   Dialog,
@@ -19,13 +18,17 @@ import {
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Textarea} from "@/components/ui/textarea";
 import {getAllMeetingsOfClient} from "@/api/userAPI";
+import { useSearchParams } from 'next/navigation'
+
 
 interface PageProps {
   searchParams: { id: string }
 }
 
-const Page = ({searchParams}: PageProps) => {
+const Page = ({}: PageProps) => {
   const [meetingList, setMeetingList] = React.useState()
+  const searchParams = useSearchParams()
+
 
   React.useEffect(() => {
     getAllMeetingsOfClient().then(resp => setMeetingList(resp))
@@ -44,7 +47,7 @@ const Page = ({searchParams}: PageProps) => {
     <>
       <Sidebar pathname={"/meetings"} />
       <Content>
-        <Tabs startupId={searchParams.id} />
+        <Tabs />
         <Button>+ Meeting</Button>
 
         <section className={styles.meetingsSection}>
